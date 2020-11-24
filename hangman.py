@@ -1,6 +1,6 @@
 import random
-#Step 1 
 
+# DEFINITIONS
 HANGMANPICS = ['''
   +---+
   |   |
@@ -55,9 +55,18 @@ HANGMANPICS = ['''
 
 word_list = ["aardvark", "baboon", "camel","mouse","dog","cat"]
 
+# functions
 def split(word): 
     return [char for char in word]  
+  
+def drawAnswer(answerArray):
+  answer = ""
+  for char in answerArray:
+    answer += char + " "
+  print(answer)    
 
+  
+#START GAME  
 print('''_                                             
 | |                                            
 | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
@@ -68,33 +77,27 @@ print('''_
                    |___/                       '''
                    )
 
-#TODO-1 - Randomly choose a word from the word_list and assign it to a variable called chosen_word.
+#Randomly choose a word from the word_list and assign it to a variable called chosen_word.
 random_word = random.choice(word_list)
-
-#print(random_word)
 wordToGuess = split(random_word)
 
 answerArray = []
 for char in wordToGuess:
   answerArray.append("_")
 
-def drawAnswer(answerArray):
-  answer = ""
-  for char in answerArray:
-    answer += char + " "
-  print(answer)  
 
 gameover = False
 counter = 0;
 print(HANGMANPICS[counter] + "\n")
+
 while(not(gameover)):
-  
-  
 
   drawAnswer(answerArray)
-  #TODO-2 - Ask the user to guess a letter and assign their answer to a variable called guess. Make guess lowercase.
+  
+  # get users guess
   guess = input("Guess a letter: ").lower()
-
+  
+  # check whether guess is in word or not
   if(guess in wordToGuess):
     for n in range(0, len(random_word)):
       if(guess == wordToGuess[n]):
@@ -102,11 +105,13 @@ while(not(gameover)):
   else:
     counter += 1
 
+  # check for end conditions  
   if counter >= 6:
       gameover = True  
   elif not("_" in  answerArray):
       gameover = True 
-    #draw hangman
+
+  #draw hangman
   print(HANGMANPICS[counter] + "\n")
 
 if(not("_" in  answerArray)):
@@ -114,4 +119,3 @@ if(not("_" in  answerArray)):
 else:
   print("you loose")      
 
-#TODO-3 - Check if the letter the user guessed (guess) is one of the letters in the chosen_word.
